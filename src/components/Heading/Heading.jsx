@@ -4,12 +4,18 @@ import React from "react";
  *Heading for the titles
  *@param {Object} props
  *@param {"h1" | "h2" | "h3" | "h4" | "h5" | "h6" } [props.as] - Heading tag to display
- *@param {React.ReactNode} props.children
+ *@param {React.ReactNode} [props.children]
  *@param {string} [props.className]
  */
-export const Heading = ({ as: Tag = "h1", children, className = "" }) => {
+export const Heading = ({
+  as: Tag = "h1",
+  className = "",
+  children,
+  ...props
+}) => {
   return (
     <Tag
+      {...props}
       className={`${className} ${
         Tag === "h1"
           ? "text-[64px] leading-[75px]"
