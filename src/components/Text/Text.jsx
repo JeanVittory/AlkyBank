@@ -25,7 +25,7 @@ export const Text = React.forwardRef(
 						: variant === textVariant.lead
 						? 'font-roboto text-2xl font-normal leading-[30px]'
 						: ''
-				} font-bold tracking-[0] decoration-[none]`}
+				} tracking-[0] decoration-[none]`}
 			>
 				{children}
 			</Tag>

@@ -13,7 +13,7 @@ export const Heading = ({ as: Tag = 'h1', className = '', children, ...props }) 
 			{...props}
 			className={`${className} ${
 				Tag === 'h1'
-					? 'text-[64px] leading-[75px]'
+					? 'md:text-[64px] leading-[75px] text-4xl'
 					: Tag === 'h2'
 					? 'text-4xl leading-[40px]'
 					: Tag === 'h3'
