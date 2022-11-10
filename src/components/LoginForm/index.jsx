@@ -1,58 +1,43 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LSKeys } from 'src/utils/localStorageKeys';
 import { webRoutes } from 'src/utils/web.routes';
 import { Button } from '../Button';
 import { Heading } from '../Heading';
 import { Text } from '../Text';
+import { AuthRepository } from 'src/repositories/auth.repository';
+import { useDispatch } from 'react-redux';
+import { authActions } from 'src/features/auth/authSlice';
+import {toast} from "react-toastify"
 
 export const LoginForm = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [invalidUser, setInvalidUser] = useState(false);
-
+	const dispatch = useDispatch();
 	const navigateTo = useNavigate();
+
 
 	const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gi;
 
 	const handleForm = async (event) => {
 		event.preventDefault();
 
-		try {
-			const response = await fetch('http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/auth/login', {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ email: email, password: password }),
-			});
-			const data = await response.json();
-
-			const getUser = await fetch('http://wallet-main.eba-ccwdurgr.us-east-1.elasticbeanstalk.com/auth/me', {
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${data.accessToken}`,
-				},
-			});
-
-			const userData = await getUser.json();
-
-			if (response.ok) {
-				localStorage.setItem(LSKeys.accessToken, data.accessToken);
-				localStorage.setItem('userData', JSON.stringify(userData));
-				setInvalidUser(false);
-
-				alert(`Welcome back ${userData.first_name} ${userData.last_name}`);
-
+		const handleForm = async (event) => {
+			event.preventDefault();
+	
+			try {
+				const { login, userInfo } = AuthRepository();
+				await login({ email, password });
+				const responseUserData = await userInfo();
+				const userData = { ...responseUserData };
+				dispatch(authActions.login(userData));
 				navigateTo(webRoutes.home);
-			} else if (!response.ok) {
+				toast.success(`Welcome back ${userData.first_name} ${userData.last_name}`);
+			} catch (error) {
 				setInvalidUser(true);
 			}
-		} catch (error) {
-			console.log(error);
-		}
+		};
 	};
 
 	const handleEmail = (event) => {

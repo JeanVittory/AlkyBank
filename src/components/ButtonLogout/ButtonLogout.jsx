@@ -1,6 +1,6 @@
 import { Button } from '../Button';
 import { useDispatch } from 'react-redux';
-import { clearUserList } from 'src/features/users/userSlice';
+import { authActions } from '../../features/auth/authSlice';
 import { clearCredit } from 'src/features/credit/creditSlice';
 
 const ButtonLogout = ({ handlerLogin, variant, close }) => {
@@ -8,7 +8,7 @@ const ButtonLogout = ({ handlerLogin, variant, close }) => {
 
 	const handlerLogout = () => {
 		localStorage.clear();
-		dispatch(clearUserList());
+		dispatch(authActions.logout());
 		dispatch(clearCredit());
 		handlerLogin();
 	};
