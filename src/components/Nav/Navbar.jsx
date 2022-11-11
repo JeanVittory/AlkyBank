@@ -18,7 +18,7 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 	};
 
 	return (
-		<header className="flex justify-between items-center bg-ct-primary-base p-4">
+		<header className="flex  justify-between items-center bg-ct-primary-base p-4">
 			<Link to="/">
 				<img src={logo} alt="logo" tabIndex="0" />
 			</Link>
