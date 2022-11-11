@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../../components/Button/index';
 import { Text } from '../../components/Text/Text';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 const EmailTransfer = () => {
 	const [userEmailQueryNumber, setUserEmailQueryNumber] = useState(1);
@@ -10,7 +12,7 @@ const EmailTransfer = () => {
 	const [enteredIdAccount, setEnteredIdAccount] = useState('');
 	const [ownAccount, setOwnAccount] = useState('');
 	const [doTransaction, setDoTransaction] = useState(false);
-	const [transactionMoney, setTransactionMoney] = useState(0);
+	const [transactionMoney, setTransactionMoney] = useState('');
 	const [transactionEmail, setTransactionEmail] = useState('');
 	const [doOwnAccountSearch, setDoOwnAccountSearch] = useState(false);
 	const [doEmailSearch, setDoEmailSearch] = useState(false);
@@ -25,12 +27,40 @@ const EmailTransfer = () => {
 		setTransactionMoney(event.target.value);
 	};
 
+	const user = useSelector((state) => state.auth.user);
+
 	const submitHandler = async (event) => {
 		event.preventDefault();
-		setOwnUserData(JSON.parse(localStorage.getItem('userData')));
+		setOwnUserData(user);
 		setAccessToken(`Bearer ${localStorage.getItem('ACCESS_TOKEN')}`);
-		setDoOwnAccountSearch(true);
-		console.log('Pasando a buscar propia cuenta');
+		transactionMoney > 0
+			? transactionEmail != ''
+				? (setDoOwnAccountSearch(true),
+				  Swal.fire({
+						title: 'Loading...',
+						html: '<b>Please, wait until the transaction is done</b>',
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+						didOpen: () => {
+							Swal.showLoading();
+						},
+				  }))
+				: Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: 'Please, enter a valid email adress',
+						confirmButtonText: 'Understood',
+						showCloseButton: true,
+						allowOutsideClick: false,
+				  })
+			: Swal.fire({
+					icon: 'error',
+					title: 'Error',
+					text: 'Please, enter a valid amount',
+					confirmButtonText: 'Understood',
+					showCloseButton: true,
+					allowOutsideClick: false,
+			  });
 	};
 
 	useEffect(() => {
@@ -46,18 +76,21 @@ const EmailTransfer = () => {
 
 			let result = apiRes.data.find((user) => user.userId == ownUserData.id);
 			if (result == undefined && apiRes.data.length != 0) {
-				console.log(ownAccountQueryNumber);
 				setOwnAccountQueryNumber(ownAccountQueryNumber + 1);
 			} else {
 				result == undefined
-					? (console.log('No encontramos una cuenta asociada a tu usuario'),
+					? (Swal.close(),
+					  Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: 'We could not find an account linked to your user',
+							confirmButtonText: 'Understood',
+							showCloseButton: true,
+							allowOutsideClick: false,
+					  }),
 					  setDoOwnAccountSearch(false),
 					  setOwnAccountQueryNumber(1))
-					: (setOwnAccount(result),
-					  console.log('Pasando a buscar mail asociado'),
-					  setDoOwnAccountSearch(false),
-					  setDoEmailSearch(true),
-					  setOwnAccountQueryNumber(1));
+					: (setOwnAccount(result), setDoOwnAccountSearch(false), setDoEmailSearch(true), setOwnAccountQueryNumber(1));
 			}
 		}
 		doOwnAccountSearch && ownAccountSearch();
@@ -76,13 +109,21 @@ const EmailTransfer = () => {
 
 			let result = apiRes.data.find((user) => user.email == transactionEmail);
 			if (result == undefined && apiRes.data.length != 0) {
-				console.log(userEmailQueryNumber);
 				setUserEmailQueryNumber(userEmailQueryNumber + 1);
 			} else {
 				result == undefined
-					? (console.log('No encontramos a un usuario con tal ID'), setDoEmailSearch(false), setUserEmailQueryNumber(1))
+					? (Swal.close(),
+					  Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: 'We could not find an user linked to the provided Email',
+							confirmButtonText: 'Understood',
+							showCloseButton: true,
+							allowOutsideClick: false,
+					  }),
+					  setDoEmailSearch(false),
+					  setUserEmailQueryNumber(1))
 					: (setEnteredEmailUserData(result),
-					  console.log('Pasando a buscar cuenta al mail asociado'),
 					  setDoAccountSearch(true),
 					  setDoEmailSearch(false),
 					  setUserEmailQueryNumber(1));
@@ -104,18 +145,21 @@ const EmailTransfer = () => {
 
 			let result = apiRes.data.find((user) => user.userId == enteredEmailUserData.id);
 			if (result == undefined && apiRes.data.length != 0) {
-				console.log(accountQueryNumber);
 				setAccountQueryNumber(accountQueryNumber + 1);
 			} else {
 				result == undefined
-					? (console.log('No encontramos una cuenta asociada a este usuario'),
+					? (Swal.close(),
+					  Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: 'We could not find an account linked to the provided user',
+							confirmButtonText: 'Understood',
+							showCloseButton: true,
+							allowOutsideClick: false,
+					  }),
 					  setDoAccountSearch(false),
 					  setAccountQueryNumber(1))
-					: (setEnteredIdAccount(result),
-					  console.log('Pasando a realizar el pago'),
-					  setDoAccountSearch(false),
-					  setAccountQueryNumber(1),
-					  setDoTransaction(true));
+					: (setEnteredIdAccount(result), setDoAccountSearch(false), setAccountQueryNumber(1), setDoTransaction(true));
 			}
 		}
 		doAccountSearch && accountSearch();
@@ -157,9 +201,17 @@ const EmailTransfer = () => {
 					'Content-Type': 'application/json',
 				},
 			});
-			console.log('Pago realizado!');
+			Swal.close();
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: 'Transaction completed successfully',
+				confirmButtonText: 'Continue',
+				showCloseButton: true,
+				allowOutsideClick: false,
+			});
 			setTransactionEmail('');
-			setTransactionMoney(0);
+			setTransactionMoney('');
 			setOwnAccount('');
 			setEnteredEmailUserData('');
 			setEnteredIdAccount('');
@@ -178,7 +230,7 @@ const EmailTransfer = () => {
 						To which user do you want to send money?
 					</Text>
 					<input
-						type="text"
+						type="email"
 						placeholder="johndoe@gmail.com"
 						className="w-full rounded-md border border-black py-2 px-4 text-sm"
 						value={transactionEmail}

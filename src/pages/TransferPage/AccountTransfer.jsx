@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../../components/Button/index';
 import { Text } from '../../components/Text/Text';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 const AccountTransfer = () => {
 	const [ownAccountQueryNumber, setOwnAccountQueryNumber] = useState(1);
 	const [enteredIdAccount, setEnteredIdAccount] = useState('');
 	const [ownAccount, setOwnAccount] = useState('');
 	const [doTransaction, setDoTransaction] = useState(false);
-	const [transactionMoney, setTransactionMoney] = useState(0);
+	const [transactionMoney, setTransactionMoney] = useState('');
 	const [transactionAccount, setTransactionAccount] = useState('');
 	const [doOwnAccountSearch, setDoOwnAccountSearch] = useState(false);
 	const [doAccountDataGrab, setDoAccountDataGrab] = useState(false);
@@ -21,12 +23,40 @@ const AccountTransfer = () => {
 		setTransactionMoney(event.target.value);
 	};
 
+	const user = useSelector((state) => state.auth.user);
+
 	const submitHandler = async (event) => {
 		event.preventDefault();
-		setOwnUserData(JSON.parse(localStorage.getItem('userData')));
+		setOwnUserData(user);
 		setAccessToken(`Bearer ${localStorage.getItem('ACCESS_TOKEN')}`);
-		setDoOwnAccountSearch(true);
-		console.log('Pasando a buscar propia cuenta');
+		transactionMoney > 0
+			? transactionAccount != ''
+				? (setDoOwnAccountSearch(true),
+				  Swal.fire({
+						title: 'Loading...',
+						html: '<b>Please, wait until the transaction is done</b>',
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+						didOpen: () => {
+							Swal.showLoading();
+						},
+				  }))
+				: Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: 'Please, enter a valid account ID',
+						confirmButtonText: 'Understood',
+						showCloseButton: true,
+						allowOutsideClick: false,
+				  })
+			: Swal.fire({
+					icon: 'error',
+					title: 'Error',
+					text: 'Please, enter a valid amount',
+					confirmButtonText: 'Understood',
+					showCloseButton: true,
+					allowOutsideClick: false,
+			  });
 	};
 
 	useEffect(() => {
@@ -42,15 +72,21 @@ const AccountTransfer = () => {
 
 			let result = apiRes.data.find((user) => user.userId == ownUserData.id);
 			if (result == undefined && apiRes.data.length != 0) {
-				console.log(ownAccountQueryNumber);
 				setOwnAccountQueryNumber(ownAccountQueryNumber + 1);
 			} else {
 				result == undefined
-					? (console.log('No encontramos una cuenta asociada a tu usuario'),
+					? (Swal.close(),
+					  Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: 'We could not find an account linked to your user',
+							confirmButtonText: 'Understood',
+							showCloseButton: true,
+							allowOutsideClick: false,
+					  }),
 					  setDoOwnAccountSearch(false),
 					  setOwnAccountQueryNumber(1))
 					: (setOwnAccount(result),
-					  console.log('Pasando a buscar mail asociado'),
 					  setDoOwnAccountSearch(false),
 					  setDoAccountDataGrab(true),
 					  setOwnAccountQueryNumber(1));
@@ -71,9 +107,17 @@ const AccountTransfer = () => {
 			let apiRes = await res.json();
 
 			if (apiRes.status == 500) {
-				console.log('No encontramos una cuenta asociada a ese ID');
+				Swal.close(),
+					Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: 'We could not find an account with the provided ID',
+						confirmButtonText: 'Understood',
+						showCloseButton: true,
+						allowOutsideClick: false,
+					});
 			} else {
-				setEnteredIdAccount(JSON.parse(apiRes)), console.log('Pasando a realizar el pago');
+				setEnteredIdAccount(apiRes);
 				setDoAccountDataGrab(false);
 				setDoTransaction(true);
 			}
@@ -117,9 +161,17 @@ const AccountTransfer = () => {
 					'Content-Type': 'application/json',
 				},
 			});
-			console.log('Pago realizado!');
+			Swal.close();
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: 'Transaction completed successfully',
+				confirmButtonText: 'Continue',
+				showCloseButton: true,
+				allowOutsideClick: false,
+			});
 			setTransactionAccount('');
-			setTransactionMoney(0);
+			setTransactionMoney('');
 			setOwnAccount('');
 			setEnteredIdAccount('');
 			setDoTransaction(false);
