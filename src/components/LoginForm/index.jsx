@@ -5,6 +5,7 @@ import { webRoutes } from 'src/utils/web.routes';
 import { Button } from '../Button';
 import { Heading } from '../Heading';
 import { Text } from '../Text';
+import Swal from 'sweetalert2';
 
 export const LoginForm = () => {
 	const [email, setEmail] = useState('');
@@ -44,7 +45,14 @@ export const LoginForm = () => {
 				localStorage.setItem('userData', JSON.stringify(userData));
 				setInvalidUser(false);
 
-				alert(`Welcome back ${userData.first_name} ${userData.last_name}`);
+				Swal.fire({
+					title: 'Logged in',
+					text: `Welcome back ${userData.first_name} ${userData.last_name}`,
+					icon: 'success',
+					confirmButtonText: 'Continuar',
+					allowOutsideClick: false,
+					showCloseButton: true,
+				});
 
 				navigateTo(webRoutes.home);
 			} else if (!response.ok) {
