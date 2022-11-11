@@ -205,7 +205,7 @@ const EmailTransfer = () => {
 			Swal.fire({
 				icon: 'success',
 				title: 'Success',
-				text: 'Transaction completed successfully',
+				html: `Transaction completed.<br><br> You have send $${transactionMoney} to the account #${enteredIdAccount.id}`,
 				confirmButtonText: 'Continue',
 				showCloseButton: true,
 				allowOutsideClick: false,

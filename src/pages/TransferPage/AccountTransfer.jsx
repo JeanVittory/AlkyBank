@@ -34,7 +34,7 @@ const AccountTransfer = () => {
 				? (setDoOwnAccountSearch(true),
 				  Swal.fire({
 						title: 'Loading...',
-						html: '<b>Please, wait until the transaction is done</b>',
+						text: 'Please, wait until the transaction is done',
 						allowEscapeKey: false,
 						allowOutsideClick: false,
 						didOpen: () => {
@@ -165,7 +165,7 @@ const AccountTransfer = () => {
 			Swal.fire({
 				icon: 'success',
 				title: 'Success',
-				text: 'Transaction completed successfully',
+				html: `Transaction completed.<br><br> You have send $${transactionMoney} to the account #${enteredIdAccount.id}`,
 				confirmButtonText: 'Continue',
 				showCloseButton: true,
 				allowOutsideClick: false,
