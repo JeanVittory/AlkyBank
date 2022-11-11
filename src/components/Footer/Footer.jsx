@@ -37,3 +37,4 @@ const Footer = () => {
 	);
 };
 export { Footer };
+

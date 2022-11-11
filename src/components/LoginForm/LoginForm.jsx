@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { authActions } from 'src/features/auth/authSlice';
 import { AuthRepository } from 'src/repositories/auth.repository';
 import { webRoutes } from 'src/utils/web.routes';
 import { Button } from '../Button';

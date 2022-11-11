@@ -37,7 +37,7 @@ export const TransactionsRepository = (signal) => {
 		findAllPaginated: async ({ page }) => {
 			const accessToken = findAccessToken();
 
-			const response = await fetch(`${constants.API_URL}/transactions`, {
+			const response = await fetch(`${constants.API_URL}${page}`, {
 				headers: { accept: 'application/json', Authorization: formatAccessToken(accessToken) },
 				signal,
 				method: HTTPVerbs.GET,

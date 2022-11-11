@@ -25,3 +25,4 @@ export const movementsSlice = createSlice({
 export const movementsActions = movementsSlice.actions;
 
 export default movementsSlice.reducer;
+
