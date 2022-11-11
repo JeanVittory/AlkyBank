@@ -28,6 +28,7 @@ export default function DepositPage() {
 			}
 
 			const endPointBody = MovementFormToCreate(movementWithCurrency)
+			
 			createDeposit(319, endPointBody)
 		}else{
 			notify("Please fill all fields out", "error")
