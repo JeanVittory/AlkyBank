@@ -10,12 +10,13 @@ export const PublicRoute = ({ children }) => {
 	const { isAuthenticated, isAuthenticating } = useAuthentication(AuthRepository);
 
 	React.useEffect(() => {
-		if (isAuthenticated && !isAuthenticating) navigate(webRoutes.transactions, { replace: true });
+		if (isAuthenticated && !isAuthenticating) navigate(webRoutes.home, { replace: true });
 	}, [isAuthenticated, isAuthenticating]);
 
 	if (isAuthenticated || isAuthenticating) {
-		return <></>;
+		return <div />;
 	}
 
 	return <>{children}</>;
 };
+

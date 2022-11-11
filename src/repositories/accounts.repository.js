@@ -9,7 +9,7 @@ import { formatAccessToken } from 'src/utils/formatAccessToken';
 import { HTTPVerbs } from 'src/utils/HTTPVerbs';
 
 export const AccounstRepository = (signal) => {
-	const baseUrl = constants.API_URL + 'accounts';
+	const baseUrl = constants.API_URL + '/accounts';
 
 	return {
 		create: async (accountCreate) => {

@@ -1,4 +1,4 @@
-import { UserEndpointToModel } from 'src/adapters/UserEndpointToModel';
+import { UserEndpointToModel } from 'src/adapters/UserEndpointToModel.adapter';
 import { AuthLoginPOSTEndpointSchema } from 'src/schemas/authLoginPOSTEndpoint.schema';
 import { CredendialsSchema } from 'src/schemas/credendials.schema';
 import { UserEndpointSchema } from 'src/schemas/userEndpoint.schema';
@@ -9,7 +9,7 @@ import { HTTPVerbs } from 'src/utils/HTTPVerbs';
 import { LSKeys } from 'src/utils/localStorageKeys';
 
 export const AuthRepository = (signal) => {
-	const baseUrl = constants.API_URL + 'auth';
+	const baseUrl = constants.API_URL + '/auth';
 
 	return {
 		login: async (credendials) => {

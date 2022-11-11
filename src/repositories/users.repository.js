@@ -1,4 +1,4 @@
-import { UserEndpointToModel } from 'src/adapters/UserEndpointToModel';
+import { UserEndpointToModel } from 'src/adapters/UserEndpointToModel.adapter';
 import { IdSchema } from 'src/schemas/id.schema';
 import { UsersCreateSchema } from 'src/schemas/userCreate.schema';
 import { userEditSchema } from 'src/schemas/userEdit.schema';
@@ -7,7 +7,7 @@ import { constants } from 'src/utils/constants';
 import { HTTPVerbs } from 'src/utils/HTTPVerbs';
 
 export const UsersRepository = (signal) => {
-	const baseUrl = constants.API_URL + 'users';
+	const baseUrl = constants.API_URL + '/users';
 
 	return {
 		register: async (userCreate) => {

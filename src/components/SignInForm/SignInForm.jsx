@@ -42,6 +42,7 @@ export const SignInForm = ({ accounstRepository, authRepository, usersRepository
 
 			await usersRepository().edit({ userId: user.id, editUser: userWithAccount });
 			const userInfo = await authRepository().userInfo();
+			window.localStorage.clear();
 			return userInfo;
 		},
 		{
@@ -79,12 +80,13 @@ export const SignInForm = ({ accounstRepository, authRepository, usersRepository
 	return (
 		<form
 			onSubmit={onSubmit}
-			className={`${className} mx-auto mt-4 flex max-w-md flex-col gap-5 rounded border border-ct-primary-100 bg-ct-primary-100/10 p-4 sm:mt-8`}
+			className={`${className} mx-auto flex max-w-md flex-col gap-5 rounded border border-ct-neutral-dark-800/20 bg-white p-6`}
 		>
-			<Heading className="m-auto text-ct-primary-600">Sign up</Heading>
+			<Heading className="m-auto text-ct-neutral-dark-800">Sign in</Heading>
 
 			<Input
 				autoFocus
+				colorScheme="primary"
 				label="First name"
 				name={fieldNames.first_name}
 				value={formValues.first_name}
@@ -157,8 +159,18 @@ export const SignInForm = ({ accounstRepository, authRepository, usersRepository
 				</ErrorMessage>
 			</div>
 
-			<Button type="submit" variant="primary" disabled={isSomeError}>
+			<Button type="submit" colorScheme="primary" disabled={isSomeError} className="mt-6">
 				Create account
+			</Button>
+
+			<div className="flex w-full items-center justify-center gap-2">
+				<div className="h-[1px] flex-1 bg-gray-200"></div>
+				<span className="text-gray-300">or</span>
+				<div className="h-[1px] flex-1 bg-gray-200"></div>
+			</div>
+
+			<Button type="button" colorScheme="tertiary" onClick={() => navigate(webRoutes.login)}>
+				Log in
 			</Button>
 		</form>
 	);

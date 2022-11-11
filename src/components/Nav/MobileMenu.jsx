@@ -9,47 +9,47 @@ const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 
 	return (
 		<div
-			className={`transition-all ease-in-out duration-1000 bg-black-transparent fixed z-10 ${opacityBlackout} ${positionBlackout} top-0 w-full h-full lg:hidden`}
+			className={`fixed z-10 bg-black-transparent transition-all duration-1000 ease-in-out ${opacityBlackout} ${positionBlackout} top-0 h-full w-full lg:hidden`}
 			onClick={() => setShowMenu(false)}
 		>
 			<ul
-				className={`transition-all ease-in-out duration-1000 fixed bg-ct-primary-base top-0 ${positionPanel} w-60 h-full flex flex-col justify-evenly`}
+				className={`fixed top-0 bg-ct-primary-700 transition-all duration-1000 ease-in-out ${positionPanel} flex h-full w-60 flex-col justify-evenly`}
 			>
 				<li>
 					<img
 						src={close}
 						alt="close button"
-						className="absolute w-6 top-4 left-4 text-ct-neutral-ligth-base"
+						className="absolute top-4 left-4 w-6 font-medium text-ct-secondary-200"
 						onClick={() => setShowMenu(false)}
 					/>
 				</li>
 				<li>
-					<Link to="/deposit" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+					<Link to="/deposit" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
 						Carga de saldo
 					</Link>
 				</li>
 				<li>
-					<Link to="/bills" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+					<Link to="/bills" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
 						Gastos
 					</Link>
 				</li>
 				<li>
-					<Link to="/balance" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+					<Link to="/balance" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
 						Balance
 					</Link>
 				</li>
 				<li>
-					<Link to="/transactions" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+					<Link to="/transactions" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
 						Movimientos
 					</Link>
 				</li>
 				<li>
-					<Link to="/transfer" className="text-ct-neutral-ligth-base px-2 py-1 mx-4">
+					<Link to="/transfer" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
 						Envio de dinero
 					</Link>
 				</li>
-				<li className="px-2 mx-4">
-					<ButtonLogout variant="secondary" handlerLogin={handlerLogin}>
+				<li className="mx-4 px-2">
+					<ButtonLogout colorScheme="secondary" handlerLogin={handlerLogin}>
 						Logout
 					</ButtonLogout>
 				</li>

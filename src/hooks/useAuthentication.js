@@ -8,11 +8,10 @@ export const useAuthentication = (authRepository) => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.auth.user);
 
-	const { data: _user, isLoading: isAuthenticating } = useQuery(
-		authQueryKeys.validateToken(!!user),
+	const { isLoading: isAuthenticating } = useQuery(
+		authQueryKeys.validateToken(),
 		async ({ signal }) => {
 			if (!user) dispatch(uiActions.showSpiner());
-
 			const userInfo = await authRepository(signal).userInfo();
 			dispatch(authActions.login({ ...userInfo }));
 			return userInfo;
@@ -25,10 +24,11 @@ export const useAuthentication = (authRepository) => {
 			},
 			onError: () => {
 				dispatch(uiActions.hideSpiner());
-				dispatch(authActions.logout({ ...user }));
+				dispatch(authActions.logout());
 			},
 		},
 	);
 
-	return { isAuthenticated: !!_user || !!user, isAuthenticating: isAuthenticating };
+	return { isAuthenticated: !!user, isAuthenticating: isAuthenticating };
 };
+

@@ -2,8 +2,8 @@ import { LoginForm } from 'src/components/LoginForm';
 
 export default function LoginPage() {
 	return (
-		<div>
+		<main className="my-auto">
 			<LoginForm />
-		</div>
+		</main>
 	);
 }

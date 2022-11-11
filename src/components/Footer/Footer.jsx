@@ -3,35 +3,37 @@ import { Heading } from 'src/components/Heading';
 
 const Footer = () => {
 	return (
-		<footer className="flex justify-around items-center bg-ct-primary-base p-4 ">
-			<section className="hidden md:block">
-				<Heading as="h5" className="text-ct-neutral-ligth-base py-1">
-					Contacto:
-				</Heading>
-				<ul>
-					<li className="text-ct-neutral-ligth-base text-xs py-1">324 567 89 90</li>
-					<li className="text-ct-neutral-ligth-base text-xs py-1">Cl. Manuela Del Valle # 5694</li>
-					<li className="text-ct-neutral-ligth-base text-xs py-1">Horacio Sur, Perú</li>
-				</ul>
-			</section>
-			<section>
-				<img src={logo} alt="logo" />
-				<p className="text-ct-neutral-ligth-base text-xs py-1">&copy; {new Date().getFullYear()} All rights reserved</p>
-			</section>
-			<section>
-				<ul>
-					<li className="text-ct-neutral-ligth-base text-xs py-1">
-						<button className="hover:underline">Términos de Servicio</button>{' '}
-					</li>
-					<li className="text-ct-neutral-ligth-base text-xs py-1">
-						<button className="hover:underline">Privacidad</button>{' '}
-					</li>
-					<li className="text-ct-neutral-ligth-base text-xs py-1">
-						<button className="hover:underline">PQRS</button>
-					</li>
-				</ul>
-			</section>
-		</footer>
+		<div className="bg-ct-primary-700">
+			<footer className="mx-auto flex max-w-screen-xl items-center justify-between p-4 xl:px-0">
+				<section className="hidden md:block">
+					<Heading as="h5" size="headline6" className="py-1 text-ct-secondary-100">
+						Contacto:
+					</Heading>
+					<ul className="space-y-1">
+						{['324 567 89 90', 'Cl. Manuela Del Valle # 5694', 'Horacio Sur, Perú'].map((v) => (
+							<li key={v} className="text-xs font-medium text-ct-secondary-100">
+								{v}
+							</li>
+						))}
+					</ul>
+				</section>
+				<section>
+					<img src={logo} alt="logo" />
+					<p className="py-1 text-xs font-medium text-ct-secondary-100">
+						&copy; {new Date().getFullYear()} All rights reserved
+					</p>
+				</section>
+				<section>
+					<ul className="space-y-1">
+						{['Términos de Servicio', 'Privacidad', 'PQRS'].map((v) => (
+							<li key={v} className="py-1 text-xs font-medium text-ct-secondary-100">
+								<button className="hover:underline">{v}</button>
+							</li>
+						))}
+					</ul>
+				</section>
+			</footer>
+		</div>
 	);
 };
 export { Footer };

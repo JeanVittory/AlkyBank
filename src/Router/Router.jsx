@@ -29,7 +29,9 @@ export const Router = () => {
 						path={webRoutes.home}
 						element={
 							<Suspense fallback={<Spinner />}>
-								<HomePage />
+								<PrivateRoute>
+									<HomePage />
+								</PrivateRoute>
 							</Suspense>
 						}
 					/>
@@ -120,3 +122,4 @@ export const Router = () => {
 		</BrowserRouter>
 	);
 };
+

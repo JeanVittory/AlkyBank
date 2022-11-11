@@ -1,15 +1,16 @@
 export class User {
-	constructor(props) {
-		this.id = props.id;
-		this.last_name = props.last_name;
-		this.email = props.email;
-		this.points = props.points;
-		this.roleId = props.roleId;
+	constructor({ id, first_name, last_name, email, points, roleId, password = '' }) {
+		this.id = id;
+		this.last_name = last_name;
+		this.email = email;
+		this.points = points;
+		this.roleId = roleId;
+		this.password = password;
 		// this.createdAt = new Date(props.createdAt);
 		// this.updatedAt = new Date(props.updatedAt);
 
-		const { first_name_decoded, accountId, first_name } = this.parseFirstName(props.first_name);
-		this.first_name = first_name;
+		const { first_name_decoded, accountId, first_name: _first_name } = this.parseFirstName(first_name);
+		this.first_name = _first_name;
 		this.first_name_decoded = first_name_decoded || '';
 		this.accountId = accountId;
 	}
@@ -47,3 +48,4 @@ export class User {
 		}
 	}
 }
+
