@@ -1,5 +1,4 @@
 import { Heading } from 'src/components/Heading';
-import people from '../../assets/home/people-home.jpg';
 import { useSelector } from 'react-redux';
 import { useCalculateBalance } from 'src/hooks/useCalculateBalance';
 import styles from './home.module.css';
@@ -19,10 +18,10 @@ export default function HomePage() {
 
 	return (
 		<div className="flex h-screen w-screen flex-col items-center justify-center overflow-x-hidden bg-white lg:flex-row">
-			<img src={people} className="mx-auto w-[100%] max-w-xl pt-[10rem] lg:m-0 lg:p-0" alt="people" />
-			<section className="flex w-screen snap-start flex-col items-center justify-center pb-[4rem] pt-10 lg:w-[50%] lg:p-0">
-				<img src={'./alkemy_logo.svg'} className="mx-auto w-auto" alt="logo" />
-				<Heading as="h3" className="mt-1 border-t border-neutral-900 px-4 text-center leading-none md:text-5xl">
+			<img src="/home-page.svg" className="mx-auto w-[100%] max-w-xl pt-[10rem] lg:m-0 lg:p-0" alt="people" />
+			<section className="flex w-screen snap-start flex-col items-center justify-center pb-[4rem] pt-10 lg:w-[50%] lg:p-0 gap-4">
+				<img src="/alkemy_logo.svg" className="mx-auto min-w-[250px] w-[500px]" alt="logo" />
+				<Heading as="h3" className="border-t border-neutral-900 p-4 text-center leading-none md:text-5xl">
 					Welcome to <span className="text-ct-neutral-dark-500 ">Alkybank</span>
 				</Heading>
 				<div className="flex items-center justify-center gap-2">

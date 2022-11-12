@@ -48,39 +48,41 @@ export default function PaymentsPage() {
 	return (
 		<main className="mx-auto w-full max-w-screen-xl px-4 py-10 xl:px-0">
 			<Heading className="mb-10 text-ct-neutral-dark-700">Payments</Heading>
+			<div className="flex gap-4 items-center">
+				<img alt="payments-image" src="/payments-page.svg" className="max-w-[500px]"/>
+				<form onSubmit={onSubmit} className="mx-auto flex flex-col gap-4 max-w-[500px] flex-1">
+					<Select
+						label="Select a currency"
+						onChange={onChange}
+						name={fieldNames.currencyCode}
+						value={formValues.currencyCode}
+					>
+						{currencyList.map((c) => (
+							<option key={c} value={c}>
+								{c}
+							</option>
+						))}
+					</Select>
 
-			<form onSubmit={onSubmit} className="mx-auto flex max-w-sm flex-col gap-4">
-				<Select
-					label="Select a currency"
-					onChange={onChange}
-					name={fieldNames.currencyCode}
-					value={formValues.currencyCode}
-				>
-					{currencyList.map((c) => (
-						<option key={c} value={c}>
-							{c}
-						</option>
-					))}
-				</Select>
+					<Input
+						label="Amount"
+						type="number"
+						max="5000"
+						onChange={onChange}
+						name={fieldNames.amount}
+						value={formValues.amount}
+					/>
 
-				<Input
-					label="Amount"
-					type="number"
-					max="5000"
-					onChange={onChange}
-					name={fieldNames.amount}
-					value={formValues.amount}
-				/>
+					<div className="grid">
+						<label htmlFor="concept">Concept</label>
+						<textarea onChange={onChange} className="border" name="concept" id="concept" cols="30" rows="4"></textarea>
+					</div>
 
-				<div className="grid">
-					<label htmlFor="concept">Concept</label>
-					<textarea onChange={onChange} className="border" name="concept" id="concept" cols="30" rows="4"></textarea>
-				</div>
-
-				<Button className="" type="submit">
-					Pay now
-				</Button>
-			</form>
+					<Button className="" type="submit">
+						Pay now
+					</Button>
+				</form>
+			</div>
 		</main>
 	);
 }

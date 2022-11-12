@@ -7,7 +7,7 @@ export const BalanceCard = (props) => {
 
 	return (
 		<div
-			className={`${className} flex w-full flex-col items-center justify-center rounded-lg border border-ct-neutral-light-50 bg-white p-6 shadow-md`}
+			className={`${className} flex w-full flex-col items-center justify-center rounded-lg border border-ct-neutral-light-50 bg-white/50 p-6 shadow-md`}
 		>
 			<div className="mb-8">
 				<img className="h-40 w-40  object-cover object-center" src={image} alt="logo" />

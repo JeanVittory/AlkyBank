@@ -1,7 +1,4 @@
 import { useSelector } from 'react-redux';
-import balanceImg from 'src/assets/balance/balance.svg';
-import cargasImg from 'src/assets/balance/cargas.svg';
-import paymentsImg from 'src/assets/balance/payments.svg';
 import { BalanceCard } from 'src/components/BalanceCard';
 import { Heading } from 'src/components/Heading';
 import { Select } from 'src/components/Select';
@@ -43,18 +40,18 @@ export default function BalancePage() {
 	const data = [
 		{
 			title: 'Balance',
-			image: balanceImg,
+			image: "/balance-page.svg",
 			amount: balance,
 		},
 		{
 			title: 'Topup',
-			image: cargasImg,
+			image: "/deposit-page.svg",
 			amount: topupSum,
 			link: webRoutes.transactions,
 		},
 		{
 			title: 'Payment',
-			image: paymentsImg,
+			image: "payments-page.svg",
 			amount: paymentSum,
 			link: webRoutes.transactions,
 		},
