@@ -10,6 +10,7 @@ import { Heading } from 'src/components/Heading';
 import { Input } from 'src/components/Input';
 import { Select } from 'src/components/Select';
 import { Text } from 'src/components/Text';
+import { useCalculateBalance } from 'src/hooks/useCalculateBalance';
 import { currencyCodeDefault } from 'src/models/currencyCodeDefault';
 import { currencyList } from 'src/models/currencyList';
 import { MovementType } from 'src/models/movementType.model';
@@ -19,16 +20,20 @@ import { TransactionsRepository } from 'src/repositories/transactions.repository
 import { webRoutes } from 'src/utils/web.routes';
 
 const formValuesInitialState = {
-	type: MovementType.topup,
+	type: MovementType.payment,
 	concept: '',
 	currencyCode: currencyCodeDefault,
 	isTransference: false,
 	amount: 0,
 };
-const fieldNames = Object.fromEntries(Object.entries(formValuesInitialState).map(([key]) => [key, key]));
 
-export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
+const fieldNames = Object.fromEntries(Object.entries(formValuesInitialState).map(([key]) => [key, key]));
+const notEnoughFunds = 'NOT_ENOUGH_FUNDS';
+
+export const MovementPaymentFormCreateOrEdit = ({ movementId }) => {
 	const user = useSelector((state) => state.auth.user);
+	const movementList = useSelector((state) => state.movements.movementList);
+	const { balance, changeCurrencyImperative } = useCalculateBalance(movementList);
 	const [formValues, setFormValues] = React.useState(formValuesInitialState);
 	const navigate = useNavigate();
 	const isEditing = !!movementId;
@@ -45,13 +50,20 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 	const { mutate: onSubmit } = useMutation(
 		async (event) => {
 			event.preventDefault();
-			const newTopUp = MovementFormToCreate({ ...formValues, amount: parseInt(formValues.amount) });
+			const amount = parseInt(formValues.amount, 10);
+			if (balance < amount) {
+				return notEnoughFunds;
+			}
+			const newTopUp = MovementFormToCreate({ ...formValues, amount });
 			const result = await AccounstRepository().movementCreate({ accountId: user.accountId, movementCreate: newTopUp });
 			return result;
 		},
 		{
-			onSuccess: () => {
-				toast.success('Charged successfully');
+			onSuccess: (data) => {
+				if (data === notEnoughFunds) {
+					return toast.warning("You doesn't have enough money to complete this transaction");
+				}
+				toast.success('Payment saved');
 				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
 			},
 			onError: () => {
@@ -61,22 +73,22 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 	);
 
 	const isReadyToSubmitEdit = isEditing && movementResponse;
-	const isNotAllowedToEdit = movementResponse?.type == MovementType.payment || movementResponse?.isTransference;
+	const isNotAllowedToEdit = movementResponse?.type === MovementType.topup || movementResponse?.isTransference;
 
 	const { mutate: onSubmitEdited } = useMutation(
 		async (event) => {
 			event.preventDefault();
-			const formValuesParsed = MovementFormToCreate({ ...formValues, amount: parseInt(formValues.amount) });
-
-			const chargeEdited = { ...movementResponse, ...formValuesParsed };
-			const result = await TransactionsRepository().edit(chargeEdited);
+			const amount = parseInt(formValues.amount, 10);
+			const formValuesParsed = MovementFormToCreate({ ...formValues, amount });
+			const paymentEdited = { ...movementResponse, ...formValuesParsed };
+			const result = await TransactionsRepository().edit(paymentEdited);
 			return result;
 		},
 		{
 			enabled: isReadyToSubmitEdit,
 			onSuccess: () => {
 				toast.success('Changes saved');
-				navigate(webRoutes.deposit, { replace: true });
+				navigate(webRoutes.payments, { replace: true });
 				setFormValues(formValuesInitialState);
 				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
 			},
@@ -91,12 +103,15 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 	const onChange = (e) => {
 		const { name, value } = e.target;
 		setFormValues((state) => ({ ...state, [name]: value }));
+		if (name !== fieldNames.currencyCode) return;
+		changeCurrencyImperative(value);
 	};
 
 	React.useEffect(() => {
 		if (!isEditing || !movementResponse) return;
 
 		setFormValues({ ...movementResponse, concept: movementResponse?.conceptDecoded });
+		changeCurrencyImperative(movementResponse.currencyCode);
 	}, [isEditing, movementResponse]);
 
 	return (
@@ -105,7 +120,7 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 			className="mx-auto flex w-full max-w-sm flex-col gap-4 rounded border border-ct-secondary-500/50 p-6 shadow-md shadow-ct-neutral-light-100 md:h-min"
 		>
 			<Heading as="h2" size="headline3" className="mb-2 text-center text-ct-neutral-dark-700">
-				{isEditing ? 'Edit charge' : 'Custom charge'}
+				{isEditing ? 'Edit payment' : 'Realise a payment'}
 			</Heading>
 
 			<Text className={` ${isNotAllowedToEdit ? 'visible' : 'invisible'} text-center text-sm text-ct-danger-300`}>
@@ -162,7 +177,7 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 			</div>
 
 			<Button className="" type="submit" disabled={(isEditing && !isReadyToSubmitEdit) || isNotAllowedToEdit}>
-				{isEditing ? 'Save changes' : 'Charge money'}
+				{isEditing ? 'Save changes' : 'Pay now'}
 			</Button>
 		</form>
 	);

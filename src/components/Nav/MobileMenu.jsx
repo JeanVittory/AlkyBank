@@ -29,7 +29,7 @@ const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 					</Link>
 				</li>
 				<li>
-					<Link to="/bills" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
+					<Link to="/payments" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
 						Gastos
 					</Link>
 				</li>
@@ -59,4 +59,3 @@ const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 };
 
 export { MobileMenu };
-

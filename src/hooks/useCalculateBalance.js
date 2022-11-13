@@ -14,6 +14,9 @@ export function useCalculateBalance(movementList = []) {
 		const { value } = e.target;
 		setCurrencyCode(value);
 	};
+	const changeCurrencyImperative = (currency) => {
+		setCurrencyCode(currency);
+	};
 
 	return {
 		balance: topupSum - paymentSum,
@@ -21,6 +24,7 @@ export function useCalculateBalance(movementList = []) {
 		topupSum,
 		currencyCode,
 		onChangeCurrency,
+		changeCurrencyImperative,
 		movementListBasedOnCurrency,
 	};
 }

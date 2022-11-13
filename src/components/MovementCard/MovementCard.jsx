@@ -78,7 +78,7 @@ export const MovementCard = (props) => {
 						size="xs"
 						className={`${linkToEdit ? 'visible' : 'invisible'} !text-sm font-bold mix-blend-multiply`}
 					>
-						Editar
+						Edit
 					</Button>
 				</div>
 

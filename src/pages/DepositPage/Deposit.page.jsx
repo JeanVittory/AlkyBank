@@ -67,18 +67,6 @@ export default function DepositPage() {
 		},
 	);
 
-	// React.useEffect(() => {
-	// 	if (!movementResponse) return;
-
-	// 	setFormValues({ ...movementResponse, concept: movementResponse?.conceptDecoded });
-	// }, [movementResponse]);
-
-	// React.useEffect(() => {
-	// 	if (isEditing && movementResponse) return;
-
-	// 	setFormValues({ ...formValuesInitialState });
-	// }, [movementResponse, isEditing]);
-
 	if (!isLoadedMovementsInfo) {
 		return <DepositPageSkeleton />;
 	}
@@ -139,4 +127,3 @@ export default function DepositPage() {
 		</main>
 	);
 }
-
