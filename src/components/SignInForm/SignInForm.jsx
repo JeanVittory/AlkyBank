@@ -80,7 +80,7 @@ export const SignInForm = ({ accounstRepository, authRepository, usersRepository
 	return (
 		<form
 			onSubmit={onSubmit}
-			className={`${className} mx-auto flex max-w-md flex-col gap-5 rounded border border-ct-neutral-dark-800/20 bg-white p-6`}
+			className={`${className} mx-auto my-8 flex max-w-md flex-col gap-5 rounded border border-ct-neutral-dark-800/20 bg-white p-6`}
 		>
 			<Heading className="m-auto text-ct-neutral-dark-800">Sign in</Heading>
 
@@ -137,7 +137,7 @@ export const SignInForm = ({ accounstRepository, authRepository, usersRepository
 				/>
 
 				<ErrorMessage className={`inset-0-0 absolute h-full w-full`} error={isPasswordErrorMessageVisible}>
-					Tip: 8 characters beetwen uppercase, lowercase and numbers.
+					8 characters beetwen uppercase, lowercase and numbers.
 				</ErrorMessage>
 			</div>
 
@@ -155,7 +155,7 @@ export const SignInForm = ({ accounstRepository, authRepository, usersRepository
 				/>
 
 				<ErrorMessage className="inset-0-0 absolute h-full w-full" error={isConfirmPasswordErrorMessageVisible}>
-					Tip: Password should match.
+					Password should match.
 				</ErrorMessage>
 			</div>
 

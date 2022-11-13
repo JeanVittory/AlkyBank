@@ -14,6 +14,8 @@ import { currencyCodeDefault } from 'src/models/currencyCodeDefault';
 import { MovementType } from 'src/models/movementType.model';
 import { transactionsQueryKeys } from 'src/models/transactions.queryKeys';
 import { AccounstRepository } from 'src/repositories/accounts.repository';
+import aos from 'aos';
+import { useEffect } from 'react';
 
 function DepositPageSkeleton() {
 	return (
@@ -67,17 +69,38 @@ export default function DepositPage() {
 		},
 	);
 
+	useEffect(() => {
+		aos.init();
+	}, []);
+
+	// React.useEffect(() => {
+	// 	if (!movementResponse) return;
+
+	// 	setFormValues({ ...movementResponse, concept: movementResponse?.conceptDecoded });
+	// }, [movementResponse]);
+
+	// React.useEffect(() => {
+	// 	if (isEditing && movementResponse) return;
+
+	// 	setFormValues({ ...formValuesInitialState });
+	// }, [movementResponse, isEditing]);
+
 	if (!isLoadedMovementsInfo) {
 		return <DepositPageSkeleton />;
 	}
 
 	return (
 		<main className="mx-auto w-full max-w-screen-xl px-4 py-10 xl:px-0">
-			<Heading className="mb-10 text-ct-neutral-dark-700">Deposits</Heading>
+			<Heading data-aos="fade-right" className="mb-10 text-ct-neutral-dark-700">
+				Charges
+			</Heading>
 
-			<div className="grid gap-5 md:grid-cols-[1fr_auto_1fr]">
+			<div className="grid gap-5 px-4 md:grid-cols-[1fr_auto_1fr]">
 				<div className="grid grid-rows-[auto_1fr]">
-					<fieldset className="grid grid-cols-[repeat(auto-fill,minmax(6rem,1fr))] gap-4 rounded border border-ct-secondary-400 p-4 shadow-md md:max-w-lg">
+					<fieldset
+						data-aos="fade-right"
+						className="grid grid-cols-[repeat(auto-fill,minmax(6rem,1fr))] gap-4 rounded border border-ct-secondary-400 p-4 shadow-md md:max-w-lg"
+					>
 						<Text as="legend" className=" px-4">
 							Quick charge
 						</Text>
@@ -114,9 +137,10 @@ export default function DepositPage() {
 					</fieldset>
 
 					<img
+						data-aos="fade-right"
 						src="./topup.webp"
 						alt="saving money"
-						className="mt-8 hidden max-w-xs place-self-start md:block xl:max-w-md"
+						className="mx-auto mt-8 hidden max-w-xs place-self-start md:block xl:max-w-md"
 					/>
 				</div>
 
@@ -127,3 +151,4 @@ export default function DepositPage() {
 		</main>
 	);
 }
+

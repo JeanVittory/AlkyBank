@@ -29,8 +29,11 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 	}, []);
 
 	return (
-		<div className=" w-full bg-ct-primary-700 px-8" data-aos="fade-right">
-			<header className="mx-auto flex w-full max-w-screen-xl items-center justify-between p-4 xl:px-0">
+		<div className=" w-full bg-ct-primary-700 px-8">
+			<header
+				data-aos="fade-right"
+				className="mx-auto flex w-full max-w-screen-xl items-center justify-between p-4 xl:px-0"
+			>
 				<Link to="/">
 					<img src={logo} alt="logo" tabIndex="0" />
 				</Link>
@@ -42,8 +45,8 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 									{ name: 'Charges', route: webRoutes.deposit },
 									{ name: 'Payments', route: webRoutes.payments },
 									{ name: 'Balance', route: webRoutes.balance },
-									{ name: 'Transactions', route: webRoutes.transactions },
-									{ name: 'Send Money', route: webRoutes.transfer },
+									{ name: 'Movements', route: webRoutes.transactions },
+									{ name: 'Transfer', route: webRoutes.transfer },
 								].map((link) => (
 									<li key={link.name} className="flex items-center justify-center">
 										<Link
@@ -55,14 +58,20 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 									</li>
 								))}
 
-								<li className="ml-8  flex justify-center">
-									<img src={avatar} alt="avatar" className="w-10 cursor-pointer" onClick={() => setIsVisible(true)} />
+								<li className="relative ml-8  flex justify-center">
+									<img
+										tabIndex="0"
+										src={avatar}
+										alt="avatar"
+										className="w-10 cursor-pointer"
+										onClick={() => setIsVisible(true)}
+									/>
 									{isVisible && (
 										<div
 											data-close={true}
-											className={`${styles.triangle} absolute right-5 top-[85px] mr-4 w-auto flex-col items-center rounded-bl-lg rounded-br-lg rounded-tl-lg bg-ct-secondary-600 p-4`}
+											className={`${styles.triangle} absolute right-[10px] top-[70px] mr-4 w-[180px] flex-col items-center justify-center rounded-bl-lg rounded-br-lg rounded-tl-lg bg-ct-secondary-600 p-4 shadow-2xl shadow-slate-500`}
 										>
-											<Text as="p" className="mb-3 text-center font-bold" data-close={true}>
+											<Text as="p" className="mb-3  text-center font-bold" data-close={true}>
 												{user ? `${capitalize(user.first_name_decoded)}  ${capitalize(user.last_name)}` : <Spinner />}
 											</Text>
 											<ButtonLogout variant="mini" handlerLogin={handlerLogin} close={true} />
@@ -87,3 +96,4 @@ const Navbar = ({ isVisible, setIsVisible }) => {
 };
 
 export { Navbar };
+

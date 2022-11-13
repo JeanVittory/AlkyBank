@@ -18,6 +18,7 @@ import { transactionsQueryKeys } from 'src/models/transactions.queryKeys';
 import { AccounstRepository } from 'src/repositories/accounts.repository';
 import { TransactionsRepository } from 'src/repositories/transactions.repository';
 import { webRoutes } from 'src/utils/web.routes';
+import aos from 'aos';
 
 const formValuesInitialState = {
 	type: MovementType.payment,
@@ -108,6 +109,10 @@ export const MovementPaymentFormCreateOrEdit = ({ movementId }) => {
 	};
 
 	React.useEffect(() => {
+		aos.init();
+	});
+
+	React.useEffect(() => {
 		if (!isEditing || !movementResponse) return;
 
 		setFormValues({ ...movementResponse, concept: movementResponse?.conceptDecoded });
@@ -116,6 +121,7 @@ export const MovementPaymentFormCreateOrEdit = ({ movementId }) => {
 
 	return (
 		<form
+			data-aos="fade-left"
 			onSubmit={_onSubmit}
 			className="mx-auto flex w-full max-w-sm flex-col gap-4 rounded border border-ct-secondary-500/50 p-6 shadow-md shadow-ct-neutral-light-100 md:h-min"
 		>
@@ -182,3 +188,4 @@ export const MovementPaymentFormCreateOrEdit = ({ movementId }) => {
 		</form>
 	);
 };
+

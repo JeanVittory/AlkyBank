@@ -19,6 +19,7 @@ export function useMovementsFilters(transactionList = [], itemsPerPage = 10) {
 	const [_itemsPerPage, setItemsPerPage] = React.useState(perPageParam || itemsPerPage);
 	const [currentPage, setCurrentPage] = React.useState(pageParam || initialPage);
 	const filterFieldsNames = Object.fromEntries(Object.entries(filtersInitialState).map(([key]) => [key, key]));
+	const isSearching = !!filtersParam;
 
 	const onFilterFieldChange = (e) => {
 		const { name = '', value = '' } = e.target;
@@ -67,6 +68,7 @@ export function useMovementsFilters(transactionList = [], itemsPerPage = 10) {
 
 	return {
 		result: transactionListPaginated,
+		isSearching,
 		filterFields,
 		filterFieldsNames,
 		totalPages,

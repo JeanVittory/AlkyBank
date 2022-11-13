@@ -46,6 +46,10 @@ export const PrivateRoute = ({ children }) => {
 			return;
 		}
 
+		if (isSuccess && !hasNextPage) {
+			dispatch(movementsActions.setInfoIsLoaded());
+		}
+
 		if (isRefetching || !isSuccess || hasNextPage) return;
 
 		const transactionListMerged = movementPageList?.pages
