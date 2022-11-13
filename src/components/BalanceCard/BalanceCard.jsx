@@ -1,12 +1,19 @@
 import { Link } from 'react-router-dom';
 import { Heading } from 'src/components/Heading';
 import { Text } from 'src/components/Text';
+import aos from 'aos';
+import { useEffect } from 'react';
 
 export const BalanceCard = (props) => {
 	const { image, title, amount, link, currency, className = '' } = props;
 
+	useEffect(() => {
+		aos.init();
+	}, []);
+
 	return (
 		<div
+			data-aos="fade-up"
 			className={`${className} flex w-full flex-col items-center justify-center rounded-lg border border-ct-neutral-light-50 bg-white/50 p-6 shadow-md`}
 		>
 			<div className="mb-8">
@@ -31,3 +38,4 @@ export const BalanceCard = (props) => {
 		</div>
 	);
 };
+

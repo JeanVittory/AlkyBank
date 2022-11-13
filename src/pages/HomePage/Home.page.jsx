@@ -31,7 +31,7 @@ export default function HomePage() {
 	};
 
 	return (
-		<main>
+		<main className="overflow-x-hidden">
 			<div className="flex h-auto w-screen flex-col items-center justify-center overflow-x-hidden overflow-y-hidden  lg:mb-20 lg:flex-row">
 				<img src={people} data-aos="fade-right" className="mx-auto w-[100%] max-w-xl pt-[4rem] lg:m-0 " alt="people" />
 				<section

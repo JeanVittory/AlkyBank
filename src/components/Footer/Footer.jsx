@@ -1,10 +1,18 @@
 import logo from 'src/assets/alkemy_logo.svg';
 import { Heading } from 'src/components/Heading';
+import aos from 'aos';
+import { useEffect } from 'react';
 
 const Footer = () => {
+	useEffect(() => {
+		aos.init();
+	}, []);
 	return (
 		<div className="w-full bg-ct-primary-700">
-			<footer className="mx-auto flex w-full max-w-screen-xl items-center justify-around py-4 xl:px-0">
+			<footer
+				data-aos="fade-right"
+				className="mx-auto flex w-full max-w-screen-xl items-center justify-around py-4 xl:px-0"
+			>
 				<section className="hidden md:block">
 					<Heading as="h5" size="headline6" className="py-1 text-ct-secondary-100">
 						Contacto:

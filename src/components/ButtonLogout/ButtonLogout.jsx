@@ -12,10 +12,11 @@ const ButtonLogout = ({ handlerLogin, colorScheme, close }) => {
 	};
 
 	return (
-		<Button colorScheme={colorScheme} onClick={handlerLogout} data-close={close}>
+		<Button colorScheme={colorScheme} onClick={handlerLogout} data-close={close} className="ml-6">
 			Logout
 		</Button>
 	);
 };
 
 export { ButtonLogout };
+
