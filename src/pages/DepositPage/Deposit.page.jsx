@@ -73,18 +73,6 @@ export default function DepositPage() {
 		aos.init();
 	}, []);
 
-	// React.useEffect(() => {
-	// 	if (!movementResponse) return;
-
-	// 	setFormValues({ ...movementResponse, concept: movementResponse?.conceptDecoded });
-	// }, [movementResponse]);
-
-	// React.useEffect(() => {
-	// 	if (isEditing && movementResponse) return;
-
-	// 	setFormValues({ ...formValuesInitialState });
-	// }, [movementResponse, isEditing]);
-
 	if (!isLoadedMovementsInfo) {
 		return <DepositPageSkeleton />;
 	}
@@ -92,7 +80,7 @@ export default function DepositPage() {
 	return (
 		<main className="mx-auto w-full max-w-screen-xl px-4 py-10 xl:px-0">
 			<Heading data-aos="fade-right" className="mb-10 text-ct-neutral-dark-700">
-				Charges
+				Deposit
 			</Heading>
 
 			<div className="grid gap-5 px-4 md:grid-cols-[1fr_auto_1fr]">
@@ -102,7 +90,7 @@ export default function DepositPage() {
 						className="grid grid-cols-[repeat(auto-fill,minmax(6rem,1fr))] gap-4 rounded border border-ct-secondary-400 p-4 shadow-md md:max-w-lg"
 					>
 						<Text as="legend" className=" px-4">
-							Quick charge
+							Quick deposit
 						</Text>
 						{[100, 200, 300, 400, 500, 1000, 1500, 2000].map((amount) => (
 							<Alert
@@ -119,7 +107,7 @@ export default function DepositPage() {
 								}
 								description={
 									<Text>
-										You want to charge {currencyCodeDefault} {amount}
+										You want to deposit {currencyCodeDefault} {amount}
 									</Text>
 								}
 								cancelButton={

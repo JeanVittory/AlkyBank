@@ -112,7 +112,7 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 			className="mx-auto flex w-full max-w-sm flex-col gap-4 rounded border border-ct-secondary-500/50 p-6 shadow-md shadow-ct-neutral-light-100 md:h-min"
 		>
 			<Heading as="h2" size="headline3" className="mb-2 text-center text-ct-neutral-dark-700">
-				{isEditing ? 'Edit charge' : 'Custom charge'}
+				{isEditing ? 'Edit deposit' : 'Custom deposit'}
 			</Heading>
 
 			<Text className={` ${isNotAllowedToEdit ? 'visible' : 'invisible'} text-center text-sm text-ct-danger-300`}>
@@ -171,7 +171,7 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 			</div>
 
 			<Button className="" type="submit" disabled={(isEditing && !isReadyToSubmitEdit) || isNotAllowedToEdit}>
-				{isEditing ? 'Save changes' : 'Charge money'}
+				{isEditing ? 'Save changes' : 'Deposit money'}
 			</Button>
 		</form>
 	);
