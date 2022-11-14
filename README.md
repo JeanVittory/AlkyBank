@@ -2,7 +2,7 @@
 
 ![Home de AlkyBank](./Pics/alkemy-pic1.png)
 
-## Pasos para intalacion:
+## Pasos para intalacion
 
 ### 1) `git clone https://github.com/JeanVittory/AlkyBank`
 
@@ -23,7 +23,6 @@ en un servidor local.
 Para testear con un rol de administrador, utilices la cuenta que utilices
 REACT_APP_ADMIN_EMAIL=my_admin@example.com
 REACT_APP_ADMIN_PASSWORD=123456aA
-
 
 ![Página de cargas](./Pics/alkemy-pic2.png)
 ![Página de pagos](./Pics/alkemy-pic3.png)
