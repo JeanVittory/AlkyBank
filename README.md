@@ -1,8 +1,10 @@
 # Aplicacion AlkyBank
 
+![Home de AlkyBank](./Pics/alkemy-pic1.png)
+
 ## Pasos para intalacion:
 
-### 1) `git clone https://github.com/cortiz2894/alkemy-alkybank.git`
+### 1) `git clone https://github.com/JeanVittory/AlkyBank`
 
 Clonar el repositorio en su local.
 
@@ -15,3 +17,10 @@ para instalar las dependencias.
 
 Al finalizar la instalacion de dependencias lanzar el comando 'npm start' para correr la aplicacion
 en un servidor local.
+
+![Página de cargas](./Pics/alkemy-pic2.png)
+![Página de pagos](./Pics/alkemy-pic3.png)
+![Página de balance](./Pics/alkemy-pic4.png)
+![Página de movimientos](./Pics/alkemy-pic5.png)
+![Página de transferencias](./Pics/alkemy-pic6.png)
+![Navbar en Mobile](./Pics/alkemy-pic7.png)
