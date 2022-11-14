@@ -13,6 +13,13 @@ export default function HomePage() {
 	const { movementList } = useSelector((state) => state.movements);
 	const [showTXN, setShowTXN] = useState(false);
 	const { balance, currencyCode, movementListBasedOnCurrency } = useCalculateBalance(movementList);
+	const [isRotate, setIsRotate] = useState(false);
+
+	const lastmovements = movementListBasedOnCurrency.filter((item, idx) => {
+		if (idx <= 5) {
+			return item;
+		}
+	});
 
 	useEffect(() => {
 		aos.init({
@@ -25,7 +32,6 @@ export default function HomePage() {
 		setShowTXN(!showTXN);
 	};
 
-	const [isRotate, setIsRotate] = useState(false);
 	const revealBalance = () => {
 		setIsRotate(!isRotate);
 	};
@@ -73,9 +79,9 @@ export default function HomePage() {
 			{movementListBasedOnCurrency && showTXN ? (
 				<section
 					data-aos="fade-down"
-					className="mb-20 mt-4 grid h-auto grid-cols-1 grid-rows-3 place-items-center gap-4 px-4 md:grid-cols-2 lg:mt-20 lg:grid-cols-3"
+					className="mb-8 mt-4 grid h-auto grid-cols-1 grid-rows-3 place-items-center gap-4 px-4 md:grid-cols-2 lg:mt-20 lg:grid-cols-3"
 				>
-					{movementListBasedOnCurrency.map((movement) => {
+					{lastmovements.map((movement) => {
 						return (
 							<article
 								key={movement.id}

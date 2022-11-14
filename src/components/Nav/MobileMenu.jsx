@@ -25,7 +25,7 @@ const MobileMenu = ({ setShowMenu, showMenu, handlerLogin }) => {
 				</li>
 				<li>
 					<Link to="/deposit" className="mx-4 px-2 py-1 font-medium text-ct-secondary-200">
-						Charges
+						Deposit
 					</Link>
 				</li>
 				<li>
