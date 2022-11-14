@@ -38,7 +38,7 @@ const EmailTransfer = () => {
 				? (setDoOwnAccountSearch(true),
 				  Swal.fire({
 						title: 'Loading...',
-						html: '<b>Please, wait until the transaction is done</b>',
+						html: 'Please, wait until the transaction is done<br> This may take a while...',
 						allowEscapeKey: false,
 						allowOutsideClick: false,
 						didOpen: () => {
@@ -229,7 +229,7 @@ const EmailTransfer = () => {
 				method: 'POST',
 				body: JSON.stringify({
 					amount: transactionMoney,
-					concept: 'Transfer',
+					concept: '{"concept":"Transfer","currencyCode":"ARS","isTransference":false}',
 					date: currentDate,
 					type: 'payment',
 					accountId: ownAccount.id,
@@ -302,4 +302,3 @@ const EmailTransfer = () => {
 };
 
 export default EmailTransfer;
-

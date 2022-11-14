@@ -34,7 +34,7 @@ const AccountTransfer = () => {
 				? (setDoOwnAccountSearch(true),
 				  Swal.fire({
 						title: 'Loading...',
-						text: 'Please, wait until the transaction is done',
+						html: `Please, wait until the transaction is done<br> This may take a while...`,
 						allowEscapeKey: false,
 						allowOutsideClick: false,
 						didOpen: () => {
@@ -190,7 +190,7 @@ const AccountTransfer = () => {
 				method: 'POST',
 				body: JSON.stringify({
 					amount: transactionMoney,
-					concept: 'Transfer',
+					concept: '{"concept":"Transfer","currencyCode":"ARS","isTransference":false}',
 					date: currentDate,
 					type: 'payment',
 					accountId: ownAccount.id,
@@ -263,4 +263,3 @@ const AccountTransfer = () => {
 };
 
 export default AccountTransfer;
-
