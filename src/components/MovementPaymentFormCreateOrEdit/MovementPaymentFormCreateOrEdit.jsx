@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import aos from 'aos';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -18,14 +19,13 @@ import { transactionsQueryKeys } from 'src/models/transactions.queryKeys';
 import { AccounstRepository } from 'src/repositories/accounts.repository';
 import { TransactionsRepository } from 'src/repositories/transactions.repository';
 import { webRoutes } from 'src/utils/web.routes';
-import aos from 'aos';
 
 const formValuesInitialState = {
 	type: MovementType.payment,
 	concept: '',
 	currencyCode: currencyCodeDefault,
 	isTransference: false,
-	amount: 0,
+	amount: '',
 };
 
 const fieldNames = Object.fromEntries(Object.entries(formValuesInitialState).map(([key]) => [key, key]));
@@ -65,6 +65,7 @@ export const MovementPaymentFormCreateOrEdit = ({ movementId }) => {
 					return toast.warning("You doesn't have enough money to complete this transaction");
 				}
 				toast.success('Payment saved');
+				setFormValues({ ...formValuesInitialState });
 				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
 			},
 			onError: () => {
@@ -90,7 +91,7 @@ export const MovementPaymentFormCreateOrEdit = ({ movementId }) => {
 			onSuccess: () => {
 				toast.success('Changes saved');
 				navigate(webRoutes.payments, { replace: true });
-				setFormValues(formValuesInitialState);
+				setFormValues({ ...formValuesInitialState });
 				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
 			},
 			onError: () => {
@@ -154,6 +155,7 @@ export const MovementPaymentFormCreateOrEdit = ({ movementId }) => {
 				disabled={isEditing || isNotAllowedToEdit}
 				label="Amount"
 				type="number"
+				placeholder="0"
 				max="5000"
 				min="1"
 				onChange={onChange}
@@ -170,6 +172,7 @@ export const MovementPaymentFormCreateOrEdit = ({ movementId }) => {
 					maxLength={150}
 					minLength={1}
 					as="textarea"
+					placeholder="A short description"
 					disabled={isNotAllowedToEdit}
 					onChange={onChange}
 					name={fieldNames.concept}
@@ -188,4 +191,3 @@ export const MovementPaymentFormCreateOrEdit = ({ movementId }) => {
 		</form>
 	);
 };
-

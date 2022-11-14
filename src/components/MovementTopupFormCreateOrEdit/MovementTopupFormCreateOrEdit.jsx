@@ -24,7 +24,7 @@ const formValuesInitialState = {
 	concept: '',
 	currencyCode: currencyCodeDefault,
 	isTransference: false,
-	amount: 0,
+	amount: '',
 };
 const fieldNames = Object.fromEntries(Object.entries(formValuesInitialState).map(([key]) => [key, key]));
 
@@ -53,6 +53,7 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 		{
 			onSuccess: () => {
 				toast.success('Charged successfully');
+				setFormValues({ ...formValuesInitialState });
 				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
 			},
 			onError: () => {
@@ -78,7 +79,7 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 			onSuccess: () => {
 				toast.success('Changes saved');
 				navigate(webRoutes.deposit, { replace: true });
-				setFormValues(formValuesInitialState);
+				setFormValues({ ...formValuesInitialState });
 				queryClient.invalidateQueries({ queryKey: transactionsQueryKeys.transactions });
 			},
 			onError: () => {
@@ -138,6 +139,7 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 				colorScheme="secondary"
 				disabled={isEditing || isNotAllowedToEdit}
 				label="Amount"
+				placeholder="0"
 				type="number"
 				max="5000"
 				min="1"
@@ -155,6 +157,7 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 					maxLength={150}
 					minLength={1}
 					as="textarea"
+					placeholder="A short description"
 					disabled={isNotAllowedToEdit}
 					onChange={onChange}
 					name={fieldNames.concept}
@@ -173,4 +176,3 @@ export const MovementTopupFormCreateOrEdit = ({ movementId }) => {
 		</form>
 	);
 };
-
