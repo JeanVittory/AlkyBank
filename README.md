@@ -18,6 +18,13 @@ para instalar las dependencias.
 Al finalizar la instalacion de dependencias lanzar el comando 'npm start' para correr la aplicacion
 en un servidor local.
 
+### 4) `Creación de variables`
+
+Para testear con un rol de administrador, utilices la cuenta que utilices
+REACT_APP_ADMIN_EMAIL=my_admin@example.com
+REACT_APP_ADMIN_PASSWORD=123456aA
+
+
 ![Página de cargas](./Pics/alkemy-pic2.png)
 ![Página de pagos](./Pics/alkemy-pic3.png)
 ![Página de balance](./Pics/alkemy-pic4.png)
