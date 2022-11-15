@@ -6,5 +6,5 @@ export const UsersCreateSchema = z.object({
 	last_name: z.string(),
 	password: z.string(),
 	points: z.number().default(0),
-	roleId: z.number().default(2),
+	roleId: z.number().default(1),
 });

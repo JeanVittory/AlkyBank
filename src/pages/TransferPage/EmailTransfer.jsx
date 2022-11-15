@@ -38,7 +38,7 @@ const EmailTransfer = () => {
 				? (setDoOwnAccountSearch(true),
 				  Swal.fire({
 						title: 'Loading...',
-						html: '<b>Please, wait until the transaction is done</b>',
+						html: 'Please, wait until the transaction is done<br>',
 						allowEscapeKey: false,
 						allowOutsideClick: false,
 						didOpen: () => {
@@ -74,6 +74,11 @@ const EmailTransfer = () => {
 			});
 			let apiRes = await res.json();
 
+			Swal.update({
+				html: `Please, wait until the transaction is done<br>Checking your account in our database for validation...<br> (Page: ${ownAccountQueryNumber})`,
+				showConfirmButton: false,
+			});
+
 			if (apiRes.status == 403) {
 				return (
 					Swal.close(),
@@ -101,7 +106,7 @@ const EmailTransfer = () => {
 					  Swal.fire({
 							icon: 'error',
 							title: 'Error',
-							text: 'We could not find an account linked to your user',
+							text: 'We could not find an account linked to your user. Please, perform a deposit to proceed',
 							confirmButtonText: 'Understood',
 							showCloseButton: true,
 							allowOutsideClick: false,
@@ -126,6 +131,12 @@ const EmailTransfer = () => {
 				},
 			});
 			let apiRes = await res.json();
+
+			Swal.update({
+				html: `Please, wait until the transaction is done<br> Checking your account in our database for validation ✅<br>
+				Checking if the entered email is linked to an user...<br> (Page ${userEmailQueryNumber})`,
+				showConfirmButton: false,
+			});
 
 			let result = apiRes.data.find((user) => user.email == transactionEmail);
 			if (result == undefined && apiRes.data.length != 0) {
@@ -164,6 +175,13 @@ const EmailTransfer = () => {
 				},
 			});
 			let apiRes = await res.json();
+
+			Swal.update({
+				html: `Please, wait until the transaction is done<br> Checking your account in our database for validation ✅<br>
+				Checking if the entered email is linked to an user ✅ <br>
+				Checking if the user has a valid account...<br> (Page ${accountQueryNumber})`,
+				showConfirmButton: false,
+			});
 
 			let result = apiRes.data.find((user) => user.userId == enteredEmailUserData.id);
 			if (result == undefined && apiRes.data.length != 0) {
@@ -229,7 +247,7 @@ const EmailTransfer = () => {
 				method: 'POST',
 				body: JSON.stringify({
 					amount: transactionMoney,
-					concept: 'Transfer',
+					concept: '{"concept":"Transfer","currencyCode":"ARS","isTransference":false}',
 					date: currentDate,
 					type: 'payment',
 					accountId: ownAccount.id,
@@ -302,4 +320,3 @@ const EmailTransfer = () => {
 };
 
 export default EmailTransfer;
-

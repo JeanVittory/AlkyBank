@@ -2,15 +2,14 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthRepository } from 'src/repositories/auth.repository';
-import { userDemo } from 'src/utils/userDemo';
 import { webRoutes } from 'src/utils/web.routes';
 import { Button } from '../Button';
 import { Heading } from '../Heading';
 import { Text } from '../Text';
 
 export const LoginForm = () => {
-	const [email, setEmail] = useState(userDemo.email);
-	const [password, setPassword] = useState(userDemo.password);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [invalidUser, setInvalidUser] = useState(false);
 
@@ -61,7 +60,6 @@ export const LoginForm = () => {
 						<input
 							type="text"
 							placeholder="johndoe@gmail.com"
-							value={email}
 							onChange={handleEmail}
 							className="w-full rounded-md border border-black py-2 px-4 text-sm"
 						/>

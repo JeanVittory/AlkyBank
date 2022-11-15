@@ -34,7 +34,7 @@ const AccountTransfer = () => {
 				? (setDoOwnAccountSearch(true),
 				  Swal.fire({
 						title: 'Loading...',
-						text: 'Please, wait until the transaction is done',
+						html: `Please, wait until the transaction is done<br> Checking your account in our database for validation<br> (Page: ${ownAccountQueryNumber})`,
 						allowEscapeKey: false,
 						allowOutsideClick: false,
 						didOpen: () => {
@@ -70,6 +70,11 @@ const AccountTransfer = () => {
 			});
 			let apiRes = await res.json();
 
+			Swal.update({
+				html: `Please, wait until the transaction is done<br> Checking your account in our database for validation<br> (Page: ${ownAccountQueryNumber})`,
+				showConfirmButton: false,
+			});
+
 			if (apiRes.status == 403) {
 				return (
 					Swal.close(),
@@ -97,7 +102,7 @@ const AccountTransfer = () => {
 					  Swal.fire({
 							icon: 'error',
 							title: 'Error',
-							text: 'We could not find an account linked to your user',
+							text: 'We could not find an account linked to your user. Please, perform a deposit to proceed',
 							confirmButtonText: 'Understood',
 							showCloseButton: true,
 							allowOutsideClick: false,
@@ -190,7 +195,7 @@ const AccountTransfer = () => {
 				method: 'POST',
 				body: JSON.stringify({
 					amount: transactionMoney,
-					concept: 'Transfer',
+					concept: '{"concept":"Transfer","currencyCode":"ARS","isTransference":false}',
 					date: currentDate,
 					type: 'payment',
 					accountId: ownAccount.id,
@@ -263,4 +268,3 @@ const AccountTransfer = () => {
 };
 
 export default AccountTransfer;
-
